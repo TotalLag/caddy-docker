@@ -5,19 +5,19 @@ LABEL caddy_version="0.9.5" architecture="amd64"
 
 ARG plugins=git
 
-RUN apk add --no-cache openssh-client git tar php7-fpm curl
+RUN apk add --no-cache openssh-client git tar php5-fpm curl
 
 # essential php libs
-RUN apk add --no-cache php7-curl php7-dom php7-gd php7-ctype php7-zip php7-xml php7-iconv php7-sqlite3 php7-mysqli php7-pgsql php7-json php7-phar php7-openssl php7-pdo
+RUN apk add --no-cache php5-curl php5-dom php5-gd php5-ctype php5-zip php5-xml php5-iconv php5-sqlite3 php5-mysqli php5-pgsql php5-json php5-phar php5-openssl php5-cli php5-pdo
 
 # composer
 RUN curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" \
       "https://getcomposer.org/installer" \
-    | php7 -- --install-dir=/usr/bin --filename=composer
+    | php -- --install-dir=/usr/bin --filename=composer
 
 # allow environment variable access.
-RUN echo "clear_env = no" >> /etc/php7/php-fpm.conf
+RUN echo "clear_env = no" >> /etc/php5/php-fpm.conf
 
 # install caddy
 RUN curl --silent --show-error --fail --location \
